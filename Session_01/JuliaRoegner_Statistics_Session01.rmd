@@ -1,0 +1,86 @@
+---
+title: "JuliaRoegner_Statistics_Session01"
+author: "Julia Roegner"
+date: "26 November 2017"
+output: html_document
+---
+
+      
+
+Statistk  
+
+
+# Session 1: Grundlagen
+
+
+
+### 1. Allgemeines  
+  
+#### '>' und '+'  
+Zeilen in R beginnen entwerder mit '>' oder mit einem '+'. Der Unterschied hier liegt darin, dass es möglich ist, bei '>' mit einer neuen beliebigen Eingabe neu anzufangen anfangen , während '+' ein Zeichen dafür ist, dass eine angefangene Eingabe noch nicht abgeschlossen ist (Beispiel 2), also beispielsweise noch Argumente oder Ähnliches fehlen.  
+Beispiel:  
+``> 2+3  
+  [1] 5 ``  
+``> 2+   
+  + 3  
+  [1] 5 ``  
+Ergebnisse aus Funktionen etc. stehen immer am Anfang einer Zeile.    
+  
+#### [1]  
+Die Zahl in eckigen Klammern vor dem Ergebnis zeigt an, die Nummer des Elements an, für das der Output generiert wurde, bei '[1]' also das erste Element.  
+   
+#### Kommentare
+Für Kommentare kann ein Hashtag ('#') gesetzt werden, dann wird alles, was nach dem Zeichen in eine Zeile geschrieben wird, vom Compiler nicht beachtet.
+   
+#### R beenden
+Mit der einfachen Funktion ``q()`` kann R beendet werden. Die Defaultwerte sind dabei, (1.) dass der Nutzer entscheiden kann, ob die Daten vor dem Schließen gespeichert werden, (2.) dass 0 für eine 'erfolgreiche Fertigstellung', sofern erforderlich, ausgegeben wird und (3.) dass eine letzte Funktion (last) vor Beenden ausgeführt wird.  
+  
+  
+### 2. Funktionen und Argumente    
+
+#### Variablen
+Variablen können einefache Zahlen(werte) repräsentieren oder aber auch komplexe Datenstrukturen. Zuweisungen an Variablen erfolgen über einen Pfeil ('<-'), also Variable, Pfeil und Wert. Für das Löschen der Variablen wird ``rm()`` (für 'remove') benutzt.  
+``> a <- 5``
+
+#### Funktionen
+Eine Funktion enthält bestimmte Anweisungen. Sie bestehen üblicherweise aus einem Funktionsnamen und Argumenten in Klammern dahinter, z. B. `sqrt(x)´.Die Anzahl der Argumente kann dabei verschieden sein; manche Funktionen benötigen auch keine, in diesem Fall werden die Klammern zwar gesetzt, aber nichts hineingeschrieben. Die Argumente sollten dabei in der richtigen Reihenfolge eingegeben und durch Kommata abgetrennt werden.  
+``> sqrt(5)  
+  [1] 2.236068``  
+``> sqrt(a)  
+  [1] 2.236068``  
+
+
+#### Default-Werte bei Funktionen  
+Die meisten Funktion, vor allem diejenigen, die schon in der Bibliothek vorhanden sind, enthalten sogenante Default-Werte. Dabei handelt es sich um bereits von vornherein gegebene Werte, die durch den Benutzer geändert werden können. Gibt der Benutzer an der Stelle kein Argument an, so wird der Default-Wert benutzt; d. h. wenn Dafault-Werte in Funktionen genutzt werden sollen, müssen diese nicht explizit angegeben werden.    
+
+
+### 3. Vektoren
+Vektoren sind die meist genutzten Datenstrukturen in R. Vektoren sind eindimensional und enthalten Folgen von  Zahlen, Charcters oder String. Dabei sollte darauf geachtet werden, dass Vektoren nur Elemente eines Datentyps enhalten können, es also keine Vektoren gibt, in denen z. B. Zahlen und Strings gemischt vorkommen (sollte so etwas dennoch passieren, werden die Zahlen automatisch in Strings umgewandelt). Datentypen von Vektoren können mit ``str()`` erfragt werden.  
+
+#### Nützliche Funktionen für Vektoren  
+Zum Abfragen der Anzahl der Elemente in einer Datenstruktur (Länge) dient ``length()``.  
+Eine nützliche Funktion ist hier beispielsweise ``append()``, die Vektoren aneinender hängen kann.  
+Für Wiederholungen bietet sich ``rep()`` (für englisch 'repition') an, die zwei Argumente erfordert: eine Folge von Elementen die wiederholt werden soll (z. B. Vektor, im Beispiel c), und die Anzahl (Beispiel 4), wie oft die Folge wiederholt werden soll:  
+``> x <- rep(c(1,2,3),4); x          
+  [1] 1 2 3 1 2 3 1 2 3 1 2 3``  
+ Sollen jedoch die Zahlen individuell wiederholt werden, so ist es erforderlich, ein 'each=' vor die Anzahl der Wiederholungen zu setzen:  
+``>  x <- rep(c(1,2,3),each=4); x    
+  [1] 1 1 1 1 2 2 2 2 3 3 3 3``  
+Die Funktion ``seq()`` dient zum Erschafffen von Sequenzen und erfordert drei Argumente: 1. den Anfangspunkt (Default: 1), den Endpunkt und die Zahl, um die die Folge jeweils vergrößert werden soll (Default: 1).  
+``> y <- seq(4, 20, 2); y            
+  [1]  4  6  8 10 12 14 16 18 20``  
+Mit ``scan()`` können die Elemente für einen Vektor bei der Zuweisung 'eingescannt' werden.
+``> z <-scan(what=character(0))  
+  1: s  
+  2: t  
+  3: a  
+  4: t  
+  5: i  
+  6: s  
+  7: t  
+  8: i  
+  9: k  
+  10:   
+  Read 9 items  
+  > z  
+  [1] "s" "t" "a" "t" "i" "s" "t" "i" "k"``
