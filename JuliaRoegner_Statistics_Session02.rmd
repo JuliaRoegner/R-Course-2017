@@ -1,0 +1,154 @@
+---
+title: "JuliaRoegner_Statistics_Session02"
+author: "Julia Roegner"
+date: "2 Dezember 2017"
+output: html_document
+---
+
+
+Statistik
+
+
+
+# Session 02  
+
+
+
+## Try R  
+
+### 1. Einführung  
+Einfache mathematische Operatoren (z. B. +, *) können direkt auf der Konsole genutzt werden. Wenn nur Strings (in " ") eingegeben werden, erhält man diesen als Ergebnis.  
+Manche Ausdrücke enthalten logische Werte (auch bool'sche Werte) als Ergebnis: TRUE oder FALSE. Dies ist zum Beispiel bei vergleichen wie bei '3 < 4' (TRUE) der Fall. Die Abfrage nach gleichen Werten kann mit dem doppelten Gleichheitszeichen ('==') gemacht werden. 'T' und 'F' stehen als Abkürzungen für TRUE bzw. FALSE.  
+Variablen können mit Werten belegt werden und diese später zur Verfügung stellen. Eine Variable wird mit '<-' initialisiert:  
+``> a <- 5``
+Variablen können auch in Ausdrücken, wie zum Beispiel 'x / 21', eingesetzt werden und jederzeit einen neuen Wert zugewiesen bekommen. Dieser muss nicht vom selben Wert sein, wie der erste, beispielsweise könnte man jetzt a einen Ausdruck vom Typ String oder einen logischen Wert zu weisen. Variablen werden ausgegeben, indem man den Namen auf der Konsole eingibt.  
+Funktionen enthalten Anweisungen. Sie haben jeweils einen Namen und benötigen meistens ein oder mehrere Argumente, die hinter dem Namen in Klammern angegeben werden (durch Kommata getrennt).  
+``> sqrt(16)  
+  [1] 4``  
+Einige Argumente haben auch Namen, die mit angegeben werden können:  
+``> rep("Yo ho!", 3)  
+  [1] "Yo ho!" "Yo ho!" "Yo ho!"``  
+``> rep("Yo ho!", times = 3)  
+  [1] "Yo ho!" "Yo ho!" "Yo ho!"``  
+Die 'help'-Funktion benötigt einen Funktionsnamen, bsp. 'sum' oder 'rep' als Argument und zeigt als Ergebnisse Informationen zu zugehörigen Package, zum Gebrauch, etc. an. Die 'example'-Funktion benötigt ebenfalls einen Funktionsnamen als Argument und gibt Beispiele für diese an.  
+Jedes Mal einen Befehl eintippen zu müssen, wenn dieser benötigt wird, ist nur für kurze Skripts sinnvoll. R-Befehle können auch in einfachen Text-Datein geschrieben werden, die dann allerdings das Suffix '.R' benötigen. Mit 'list.files()' werden alle Dateien im gegenwetrigen Verzeichnis von R angezeigt. Mit 'source()' und dem Dateinamne als Argument wird die Datei direkt von der Konsole aus ausgeführt.
+``> source("bottle1.R")  
+  [1] "This is a message in a bottle1.R!"``  
+  
+  
+### 2. Vektoren
+Bei Vektoren handelt es sich um eine Liste von Werten, ähnlich wie Felder in anderen Programmiersprachen. Die Werte können von einem beliebigen Typ sein, solange sie von EINEM Typ sind. Ist das nicht der Fall, werden sie meistens autmoatisch in Strings, manchmal auch in Integer / Float (Beispiel) konvertiert. Mit der 'c'-Fukntion werden verktoren erstellt.  
+``> c (4, TRUE, 4,7)  
+  [1] 4.0 1.0 4.7 ``  
+Sollen Vektoren aus einer Zahlenfolge erstellt werden eignen sich dafür ``start:end`` oder die seq-Funktion. Bei der seq-Funktion können auch der Abstand angegeben werden. Während es bei "start:end" auch möglich ist, herunter zu zählen, z. B. von 9 bis 5, erlaubt seq() dies nicht.
+``> 5:9  
+  [1] 5 6 7 8 9``  
+``> 9:5  
+  [11] 9 8 7 6 5``  
+``> seq (5, 9, 0.5)  
+  [1] 5.0 5.5 6.0 6.5 7.0 7.5 8.0 8.5 9.0``  
+Auch Vektoren können in Varibalen zwischengespeichert werden. Einzelne Werte erhält man, in dem man den Namen des Vektors gefolgt von der Stelle, an der sich er Wert befindet, in eckigen Klammern eingibt. Dabei sollte beachtet werden, dass Vektoren in R bei 1, nicht bei 0 anfangen.
+Wie bei den anderen Variablen auch kann einem Vektor neue Werte hinzugefügt werden. Hierbei muss der Vektor, gefolgt von der gewünschten Stelle in eckigen Klammen, mit '<-' und dem gewünschten Wert angegben werden. Sollte die Stelle nicht mehr innerhalb des Vektores liegen, so werden einfach Stellen hinzugefügt und die Stellen, für die es (noch) keine Werte gibt mit 'NA' aufgefüllt.  
+``> sentence <- c('walk', 'the', 'plank')  
+  > sentence[7] <- 'mall'``    
+``> sentence  
+  [1] "walk"  "the"   "plank" NA      NA      NA      "mall"``  
+Außerdem können auch Bereiche im Feld abgefragt werden, dies geschieht mit 'start:end', der in die eckigen Klammern eingefügt wird. Auch Zuweisungen von mehreren Stellen im Feld gleichzeitig sind so möglich.  
+``> sentence [4:6] <- c('to', 'the', 'nice')  
+  > sentence  
+  [1] "walk"  "the"   "plank" "to"    "the"   "nice"  "mall"``  
+Vektoren können auch analago zu Hashes benutzt werden, bei denen die einzelnen Werte nicht über vorgegeben Zahlen sondern von frei festlegbaren Kennzeichen abgerufen werden. Zuerst wird wie bekannt einem Vektor Werte zugewiesen, und dann kann mit der Funktion 'names()' die Art des Zugriffs verändert werden:  
+``> ranks <- 1:3  
+  > names(ranks) <- c("first", "second", "third")`` 
+``> ranks  
+  first second  third  
+       1      2      3``  
+``> ranks["first"]  
+  first   
+      1``  
+Vektoren können über die 'barplot'-Funktion auch als Säulendiagramme dargestellt werden. Dazu wird der Name des Vektors, dem zuvor Werte zugewiesen wurden barplot() als Argument übergeben. Sollten dem Vektor zuvor Namen wie bei Hashes zugewiesen worden sein, erscheinen diese auch unter der dazugehörigen Säule.
+```{r barplot, echo = TRUE}
+    vesselsSunk <- c(4, 5, 1)
+    names(vesselsSunk) <- c("England", "France", "Norway")
+    barplot(vesselsSunk)
+```
+  
+Natürlich kann mit Vektoren auch gerechnet werden. Dabei ist zu beachten, dass wenn der Vektor in einer Variable gespeichert wird, und mit dieser gerechnet wird, also zum Beispiel das Addieren von 1, Multiplizieren mit 4, oder als Argument einer Funktion wie sin() (für den Sinus) übergeben wird, diese Rechenoperation auf alle Werte in dem Vektor einzeln engewendet wird.  
+``> a <- c(1, 2, 3)  
+  > a + 1  
+  [1] 2 3 4``  
+``> sin(a)  
+  [1] 0.8414710 0.9092974 0.1411200``
+Die ganz normalen Rechenoperationen, also Addieren, Subtrahieren, Multiplizieren und Dividieren, können mit ausgeführt werden. Auch können Vektoren miteinander Verrechnet oder auch verglichen werden. Dabei werden allerdings nicht die Vektoren als Ganzes sondern nur die Variablen einzeln miteinander verrechnet bzw. verglichen.  
+``> b <- c(4, 5, 6)  
+  > a - b  
+  [1] -3 -3 -3``  
+``> a == c(1, 99, 3)  
+  [1]  TRUE FALSE  TRUE``  
+Auch Graphen können mit zwei Vektoren gezeichnet werden. Dazu wird die 'plot'-Funkton genutzt, die zwei Vektoren als Argumente benötigt. Der erste eingegebene Vektor gibt die Werte für die horizontale Achse, der zweite für die Vertikale.  
+```{r plot, echo = TRUE}
+    x <- seq(1, 5, 0.5)
+    y <- x * x
+    plot (x, y)
+```  
+  
+Es ist möglich, das innerhalb einer Statistik manche Werte nicht gegeben sind. Um diese Werte in Ruby nicht weglassen zu müssen, gibt es die Angabe NA, die zusammen mit anderen (Zahlen)Werten einfach einen Vektor eingetragen werden kann. Manche Funktionen, 'sum()' zum Beispiel, haben als Default NA, wenn in einem der Argumente NA vorhanden ist. Dies kann als Warnung vor dem Rechnen mit unvollständigen Datensätzen gesehen werden. Es ist allerdings möglich, dass man vorgibt, dass NA nicht beachtet werden soll.  
+``> a <- c(1, 3, NA, 7, 9)  
+  > sum(a)  
+  [1] NA``
+``> sum(a, na.rm = TRUE)  
+  [1] 20``  
+
+
+### Matrizen  
+Matrizen haben Zeilen und Spalten. Bei ihnen handelt es sich um ein 2-dimensionales Feld bzw. Vektor.  
+Der einfachste Weg eine Matrix zu erstellen ist sicherlich mit der Funktion 'matrix()', die drei Argumente erwartet: 1. Das erste Argument für die Werte. Gibt man hier eine Zahl ein, erhalten alle Zellen der Matrix diese Zahl als Wert, bei einem Vektor werden die Zellen mit dessen Werten befüllt. 2. Die Zahl der Reihen und 3. die Zahl der Spalten.
+``` {r matrix, echo = TRUE}
+    a <- 1:12  
+    matrix(a, 3, 4)  
+````  
+Bei der zweiten Möglichkeit wird ein Vektor angepasst. Über die Funktion dim() werden dem Verktor Dimensionen zugewiesen.
+``` {r plank, echo = TRUE}
+    plank <- 1:8
+    dim(plank) <-c(2, 4)  
+    print(plank)  
+```   
+Analog zu Vektoren können einzelne Werte der Matrix abgerufen werden, in dem man in eckigen Klammern hinter dem Matrixnamen die Zeile und Spalte (durch ein Komma getrennt) angibt.  
+``> plank[2, 3]  
+  [1] 6``  
+Das Zuweisen von einem Wert zu einer Zelle ist ebenfalls ähnlich wie bei Vektoren, nur dass Zeilen und Spalte angegeben werden müssen.  
+``> plank[2, 3] <- 17``  
+Um ganze Zeilen oder Spalten auszugeben, werden diese mit Komma angegeben:  
+Zeile:  
+``> plank[2,]  
+  [1] 2 4 17 8``  
+Spalten:  
+``plank[, 4]  
+  [1] 7 8``  
+Mehrere Zeilen / spalten können wieder mit einer Bereichsangabe ausgegeben werden.  
+Die Spalten 2 - 4 aus 'plank':  
+``` {r spaltenPlank, echo = TRUE}
+    plank[, 2:4]
+```
+
+In R gibt es einige Funktionen, um Matrizen visualisieren zu können.  
+Eine Art der Darstellung wäre ein Konturlinien Diagramm.  
+```{r contour, echo=TRUE}
+    elevation <- matrix(1, 10, 10)
+    elevation[4, 6] <- 0
+    contour(elevation)
+```  
+  
+Aber Matrizen können auch als 3D-Modell dargestellt werden. Im Beispiel wird für eine bessere Darstellung noch die Maße angepasst. Dies kann natürlich auch vermieden werden, dann wir allerdings automatisch das Diagramm so sklaiert, dass der höchste Wert der Matrix am oberen Ende des Diagramms ist.
+```{r persp, echo=TRUE}
+    persp(elevation, expand= 0.2)
+``` 
+  
+Auch das Darstellen von Matrizen als Wärmebilder ist über 'image()' möglich.  
+
+
+## Ordinalskala  
+Welche Linguistischen Daten eignen sich für die Darstellung auf einer Ordinalskala?  
+- Linguistische Einheiten: z. B. Phonem < Morphem < Wort < Phrase < Satz  
+- Grammatikalität von Sätzen: z. B. könnten Sätze je nach dem, wie grammatisch korrekt sie sind, von 'falsch' nach 'richtig' geordnent werden.  
+- Höflichkeit, z.B interessant für das Japanische: z. B. Abstufungen der verwendeten Höflichkeitsformen oder Anreden (kun < san < sama). 
